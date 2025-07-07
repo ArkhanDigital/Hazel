@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ucapan untuk Hazel</title>
+<style>
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Mengatur tata letak vertikal */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Background diganti dengan foto */
+    background-image: url('image.png'); /* Pastikan 'image.png' ada di folder yang sama */
+    background-size: cover; /* Menyesuaikan ukuran gambar agar menutupi seluruh background */
+    background-position: center; /* Memposisikan gambar di tengah */
+    background-repeat: no-repeat; /* Mencegah pengulangan gambar */
+    color: white;
+    overflow: hidden; /* Mencegah scroll saat tombol Jaemin bergerak */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Tambahkan shadow pada teks agar lebih terlihat */
+}
+.container {
+    text-align: center;
+    margin-bottom: 20px; /* Jarak antara teks dan tombol */
+}
+.animated-text {
+    font-size: 2.5em; /* Ukuran font sedikit lebih besar agar terlihat jelas */
+    opacity: 0;
+    animation: fadeInOut 2s infinite alternate; /* Animasi fade in/out berulang */
+}
+/* Animasi untuk teks */
+@keyframes fadeInOut {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.button-container {
+    display: flex;
+    gap: 20px; /* Jarak antara tombol */
+    /* Menggunakan posisi relatif untuk container tombol agar Jaemin bisa bergerak bebas di dalamnya */
+    position: relative;
+    width: 80%; /* Agar tombol Jaemin punya ruang gerak yang luas */
+    height: 100px; /* Memberikan tinggi agar tombol Jaemin tidak keluar terlalu jauh */
+    justify-content: center; /* Pusatkan tombol Arkhan */
+    align-items: center;
+}
+button {
+    background-color: #FFFFFF;
+    color: #C71585; /* Warna teks tombol agar kontras dengan background */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em; /* Ukuran font tombol sedikit lebih besar */
+    transition: background-color 0.3s ease, transform 0.1s ease-out; /* Transisi halus untuk hover dan klik */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Efek bayangan yang lebih kuat */
+}
+button:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-3px); /* Efek angkat sedikit saat di-hover */
+}
+/* Style spesifik untuk tombol Jaemin */
+#jaeminBtn {
+    position: absolute; /* Sekarang absolut agar bisa digeser secara acak di dalam button-container */
+    transition: all 0.2s ease-out; /* Transisi untuk pergerakan */
+}
+/* Animasi saat tombol diklik */
+.clicked {
+    animation: clickEffect 0.3s ease-in-out;
+}
+@keyframes clickEffect {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="animated-text">Hazel cantik, cantiknya siapa?</h1>
+    </div>
+    <div class="button-container">
+        <button id="arkhanBtn" onclick="arkhanClicked(this)">Arkhan</button>
+        <button id="jaeminBtn" onclick="jaeminClicked(this)">Jaemin</button>
+    </div>
+
+    <script>
+        // Fungsi yang dijalankan saat tombol Arkhan diklik
+        function arkhanClicked(button) {
+            button.classList.add('clicked'); // Tambahkan kelas animasi klik
+            setTimeout(() => {
+                button.classList.remove('clicked'); // Hapus kelas setelah animasi selesai
+                alert('Selamat! Sekarang Hazel cantiknya Arkhan!'); // Tampilkan notifikasi
+                // Opsional: Sembunyikan tombol Jaemin setelah Arkhan dipilih
+                document.getElementById('jaeminBtn').style.display = 'none';
+            }, 300); // Durasi animasi klik
+        }
+
+        // Fungsi yang dijalankan saat tombol Jaemin diklik (bukan lagi di-hover)
+        function jaeminClicked(button) {
+            button.classList.add('clicked'); // Tambahkan kelas animasi klik
+            setTimeout(() => {
+                button.classList.remove('clicked'); // Hapus kelas setelah animasi selesai
+
+                // Dapatkan dimensi container tombol untuk batasan pergerakan
+                const buttonContainer = document.querySelector('.button-container');
+                const containerRect = buttonContainer.getBoundingClientRect();
+
+                // Hitung posisi acak baru agar tombol tetap di dalam container
+                // Memastikan tombol tidak keluar dari batas container
+                const newX = Math.random() * (containerRect.width - button.offsetWidth);
+                const newY = Math.random() * (containerRect.height - button.offsetHeight);
+
+                // Terapkan posisi baru
+                button.style.left = newX + 'px';
+                button.style.top = newY + 'px';
+
+                // Opsional: Berikan sedikit pesan frustrasi pada Jaemin
+                console.log("Jaemin is moving again!");
+            }, 150); // Animasi klik lebih cepat agar pergerakan lebih responsif
+        }
+    </script>
+</body>
+</html>
